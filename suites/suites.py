@@ -2,7 +2,7 @@ import imp
 import inspect
 import os
 import sys
-import utils
+import src.utils as utils
 
 def get_suites():
     return [x.Suite() for x in suite_modules]
@@ -57,8 +57,8 @@ def check_method(class_object, name, number_of_args):
         utils.error("'{0}' class must have '{1}' method!".format(class_name, name))
     spec = inspect.getargspec(matching_functions[0][1])
     if len(spec.args) != number_of_args:
-        utils.error("'{1}' method of '{0}' class must have exactly {2} arguments!".
-                    format(class_name, name, number_of_args))
+        utils.error("'{1}' method of '{0}' class must have exactly {2} argument{3}!".
+                    format(class_name, name, number_of_args, 's' if number_of_args > 1 else ''))
 
 def get_suite_files():
     directory = get_suites_dir()
