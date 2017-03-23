@@ -51,7 +51,7 @@ def check_run(test):
 
 def check_method(class_object, name, number_of_args):
     class_name = class_object.__name__
-    predicate = lambda(x) : inspect.ismethod(x) and x.__name__ == name
+    predicate = lambda x : inspect.ismethod(x) and x.__name__ == name
     matching_functions = inspect.getmembers(class_object, predicate)
     if len(matching_functions) != 1:
         utils.error("'{0}' class must have '{1}' method!".format(class_name, name))
