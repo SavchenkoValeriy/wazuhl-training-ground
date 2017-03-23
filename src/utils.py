@@ -14,3 +14,6 @@ def check_executable(executable):
 def error(message):
     print "Error:", message
     sys.exit(1)
+
+def pathify(line):
+    return '_'.join(line.split())

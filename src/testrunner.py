@@ -1,4 +1,4 @@
-import configure
+import config
 import random
 
 def get_tests(suites, flags):

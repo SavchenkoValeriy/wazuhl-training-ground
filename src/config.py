@@ -15,3 +15,6 @@ def get_clangpp():
 
 def define_getter(name, value):
     globals()[name] = lambda : value
+
+def get_alpha():
+    return 0.5
