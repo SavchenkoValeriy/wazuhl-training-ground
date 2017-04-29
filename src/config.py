@@ -13,6 +13,9 @@ def get_clang():
 def get_clangpp():
     return os.path.join(get_wd(), "bin", "clang++")
 
+def get_mongodb():
+    return os.path.join(get_wd(), "wazuhl", "mongo")
+
 def define_getter(name, value):
     globals()[name] = lambda : value
 

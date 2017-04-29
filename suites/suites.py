@@ -66,7 +66,6 @@ def get_suite_files():
             for suite in os.listdir(directory)
             if suite != "suites.py" and suite.endswith(".py")]
 
-
 def get_suites_dir():
     return os.path.dirname(os.path.realpath(__file__))
 
