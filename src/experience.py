@@ -6,6 +6,7 @@ import os
 import shutil
 
 import config
+import utils
 
 class Experience:
     def __init__(self):
@@ -19,6 +20,7 @@ class Experience:
     @staticmethod
     def __start_mongo_server__():
         dbpath = config.get_mongodb()
+        utils.check_executable("mongod")
         subprocess.call(["mongod", "--dbpath", dbpath])
 
     def fill_records(self, value):
