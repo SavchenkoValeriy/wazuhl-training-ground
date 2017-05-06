@@ -9,30 +9,25 @@ class Reinforcer:
     def __init__(self, suites):
         self.suites = suites
         self.alpha = config.get_alpha()
+        self.tests = []
 
     def init_baselines(self, compilation, execution):
-        cache_file = Reinforcer.__ethalon_file__("compilation", compilation)
-        self.compilation = self.__load_cache__(cache_file)
-        if not self.compilation:
-            self.compilation = {}
-            tests = testrunner.get_tests(self.suites, compilation)
-            tests = testrunner.run(tests)
+        self.measure_baseline("compilation", compilation, "compile_time")
+        self.measure_baseline("execution", execution, "execution_time", compilation != execution)
 
-            for test in tests:
-                self.compilation[str(test)] = test.compile_time
-            self.__cache__(self.compilation, cache_file)
+    def measure_baseline(self, name, flags, test_attr, rerun=True):
+        cache_file = Reinforcer.__ethalon_file__(name, flags)
+        results = getattr(self, name)
+        results = self.__load_cache__(cache_file)
+        if not results:
+            results = {}
+            if rerun or not self.tests:
+                self.tests = testrunner.get_tests(self.suites, flags)
+                self.tests = testrunner.run(self.tests)
 
-        cache_file = Reinforcer.__ethalon_file__("execution", execution)
-        self.execution = self.__load_cache__(cache_file)
-        if not self.execution:
-            self.execution = {}
-            if compilation != execution or not tests:
-                tests = testrunner.get_tests(self.suites, execution)
-                tests = testrunner.run(tests)
-
-            for test in tests:
-                self.execution[str(test)] = test.execution_time
-            self.__cache__(self.execution, cache_file)
+            for test in self.tests:
+                results[str(test)] = getattr(test, test_attr)
+            self.__cache__(results, cache_file)
 
     def calculate_reward(self, test):
         C = self.compilation[str(test)]
