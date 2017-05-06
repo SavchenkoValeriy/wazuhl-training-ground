@@ -16,7 +16,7 @@ class Reinforcer:
         self.measure_baseline("execution", execution, "execution_time", compilation != execution)
 
     def measure_baseline(self, name, flags, test_attr, rerun=True):
-        cache_file = Reinforcer.__ethalon_file__(name, flags)
+        cache_file = Reinforcer.__etalon_file__(name, flags)
         results = getattr(self, name)
         results = self.__load_cache__(cache_file)
         if not results:
@@ -66,6 +66,6 @@ class Reinforcer:
             return pickle.load(cache)
 
     @staticmethod
-    def __ethalon_file__(name, flags):
+    def __etalon_file__(name, flags):
         return os.path.join(config.get_output(),
-                            "{0}.{1}.ethalon".format(name, utils.pathify(flags)))
+                            "{0}.{1}.etalon".format(name, utils.pathify(flags)))
